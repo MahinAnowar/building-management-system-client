@@ -1,16 +1,63 @@
-# React + Vite
+# 🏢 Building Management System (Client)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A comprehensive web application designed to manage a single building's operations. This platform connects Residents (Members), Regular Users, and Administrators, offering seamless management of apartments, agreements, payments, and announcements.
 
-Currently, two official plugins are available:
+## 🔗 Project Links
+- **🚀 Live Site:** https://building-management-system-client.vercel.app/
+- **⚙️ Server Repository:** https://github.com/MahinAnowar/building-management-system-server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🔑 Admin Credentials (For Testing)
+- **Email:** `admin@bms.com`
+- **Password:** `Password123`
+*(Use these credentials to access the full Admin Dashboard)*
 
-## React Compiler
+## 🛠️ Technology Stack
+- **Framework:** React.js (Vite)
+- **Styling:** Tailwind CSS (Custom themes & Responsive components)
+- **Authentication:** Firebase (Email/Password & Google Login)
+- **State Management:** TanStack Query (React Query)
+- **Routing:** React Router DOM
+- **Forms:** React Hook Form
+- **Data Fetching:** Axios (with custom Interceptors for JWT)
+- **Maps:** React Leaflet / Leaflet
+- **Animations:** Framer Motion (Optional features), Swiper JS (Banner)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🌟 Key Features
 
-## Expanding the ESLint configuration
+### 🌍 General (Public)
+- **Responsive Navbar:** Dynamic navigation based on user roles.
+- **Home Page:** Features a Location Map, "About the Building" section, and Coupon codes.
+- **Apartment Listing:** Browse available rooms with server-side Pagination and Rent Range filtering.
+- **Agreement System:** Users can request an agreement for an apartment directly via the UI.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 👤 User Dashboard (Role: User)
+- **Profile:** View basic profile information.
+- **Announcements:** Read updates posted by the building admin.
+
+### 🏘️ Member Dashboard (Role: Member - Verified Tenants)
+- **Payment Portal:** Pay monthly rent with a month selector.
+- **Coupon System:** Apply discount coupons (validated via API) to reduce rent total.
+- **Payment History:** View historical records of successful transactions.
+- **Lease Info:** View specific agreement details (Floor, Block, Room No).
+
+### 🛡️ Admin Dashboard (Role: Admin)
+- **Statistics:** View Total Rooms, % Booked/Available, and User counts.
+- **Manage Members:** Remove members (downgrade role to user).
+- **Agreement Requests:** Accept (converts user to member) or Reject agreements.
+- **Manage Coupons:** Create, Delete, and Update availability of coupons.
+- **Announcements:** Post news for all registered users.
+
+## 📦 Dependencies
+- `@tanstack/react-query`
+- `axios`
+- `firebase`
+- `react-helmet-async`
+- `react-hot-toast`
+- `sweetalert2`
+- `localforage` & `match-sorter`
+
+## ⚙️ Run Locally
+1. Clone the repository.
+2. Install dependencies:
+   ```bash
+   npm install
