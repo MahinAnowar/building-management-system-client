@@ -28,6 +28,17 @@ const useAxiosSecure = () => {
             (response) => response,
             async (error) => {
                 const status = error.response ? error.response.status : null;
+                const originalRequest = error.config;
+
+                // Handle 401/403 with simple retry to account for cookie mounting delay
+                if ((status === 401 || status === 403) && !originalRequest._retry) {
+                    originalRequest._retry = true;
+                    // Wait 500ms and retry
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    return axiosSecure(originalRequest);
+                }
+
+                // If fails again or not a retryable error, log out
                 if (status === 401 || status === 403) {
                     await logOut();
                     navigate('/login');

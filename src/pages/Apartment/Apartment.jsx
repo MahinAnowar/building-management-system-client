@@ -24,15 +24,16 @@ const Apartment = () => {
     const [selectedApartment, setSelectedApartment] = useState(null);
 
     // Fetch Apartments
-    const { data, isLoading, refetch } = useQuery({
+    // Fetch Apartments Code
+    const { data: apartments = [], isLoading, refetch } = useQuery({
         queryKey: ['apartments', currentPage, itemsPerPage, searchParams],
         queryFn: async () => {
             const params = {
                 page: currentPage,
                 size: itemsPerPage,
             };
-            if (searchParams.min) params.min = searchParams.min;
-            if (searchParams.max) params.max = searchParams.max;
+            if (searchParams.min) params.minRent = searchParams.min;
+            if (searchParams.max) params.maxRent = searchParams.max;
 
             const res = await axiosPublic.get('/apartments', { params });
             return res.data;
@@ -40,17 +41,29 @@ const Apartment = () => {
         keepPreviousData: true
     });
 
+    // Fetch Total Count for Pagination
+    const { data: countData } = useQuery({
+        queryKey: ['apartmentsCount', searchParams],
+        queryFn: async () => {
+            const params = {};
+            if (searchParams.min) params.minRent = searchParams.min;
+            if (searchParams.max) params.maxRent = searchParams.max;
+            const res = await axiosPublic.get('/apartmentsCount', { params });
+            return res.data;
+        }
+    });
+
     // Check Agreement Status for User
     const { data: agreementData } = useQuery({
         queryKey: ['agreement', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
-            const res = await axiosSecure.get(`/agreements/${user.email}`); // Assuming endpoint
+            const res = await axiosSecure.get(`/agreements/${user.email}`);
             return res.data;
         }
     });
 
-    const hasAgreement = !!agreementData; // If data exists, disable button
+    const hasAgreement = agreementData && agreementData.length > 0; // Check if array has items
 
     const handleSearch = () => {
         setCurrentPage(1);
@@ -94,7 +107,7 @@ const Apartment = () => {
         }
     };
 
-    const count = data?.count || 0;
+    const count = countData?.count || 0;
     const totalPages = Math.ceil(count / itemsPerPage);
     const pages = [...Array(totalPages).keys()].map(i => i + 1);
 
@@ -125,9 +138,10 @@ const Apartment = () => {
             {isLoading && <div className="text-center"><span className="loading loading-spinner loading-lg"></span></div>}
 
             {/* Grid */}
+            {/* Grid */}
             {!isLoading && (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {data?.result?.map(apt => (
+                    {apartments.map(apt => (
                         <div key={apt._id} className="card bg-base-100 shadow-xl">
                             <figure><img src={apt.image} alt={`Apartment ${apt.apartmentNo}`} className="h-48 w-full object-cover" /></figure>
                             <div className="card-body">
