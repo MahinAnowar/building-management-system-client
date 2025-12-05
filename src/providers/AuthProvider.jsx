@@ -45,17 +45,15 @@ const AuthProvider = ({ children }) => {
                 const userInfo = { email: currentUser.email };
                 axiosPublic.post('/jwt', userInfo)
                     .then(res => {
-                        // Assuming HttpOnly cookie is set by server, verify if we need to do anything else.
-                        // If result has token, we might store it, but HttpOnly is automatic.
-                        // Just set loading false.
                         setLoading(false);
                     })
-                    .catch(() => setLoading(false)); // Ensure loading stops even on error
+                    .catch(() => setLoading(false));
             }
             else {
-                // TODO: Remove token (if client side) or call logout
-                // axiosPublic.post('/logout').then(...)
-                setLoading(false);
+                // Clear state and server cookie
+                axiosPublic.post('/logout')
+                    .then(() => setLoading(false))
+                    .catch(() => setLoading(false));
             }
         });
         return () => {
