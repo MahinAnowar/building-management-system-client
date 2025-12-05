@@ -40,8 +40,9 @@ const useAxiosSecure = () => {
 
                 // If fails again or not a retryable error, log out
                 if (status === 401 || status === 403) {
-                    await logOut();
-                    navigate('/login');
+                    console.warn('Logout Triggered by API Error (DISABLED FOR DEBUG):', error);
+                    // await logOut();
+                    // navigate('/login');
                 }
                 return Promise.reject(error);
             }

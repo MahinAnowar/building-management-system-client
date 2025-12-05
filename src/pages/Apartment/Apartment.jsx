@@ -139,19 +139,36 @@ const Apartment = () => {
 
             {/* Grid */}
             {/* Grid */}
+            {/* Grid */}
             {!isLoading && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {apartments.map(apt => (
-                        <div key={apt._id} className="card bg-base-100 shadow-xl">
-                            <figure><img src={apt.image} alt={`Apartment ${apt.apartmentNo}`} className="h-48 w-full object-cover" /></figure>
-                            <div className="card-body">
-                                <h2 className="card-title">Apartment {apt.apartmentNo}</h2>
-                                <p>Floor: {apt.floorNo}, Block: {apt.blockName}</p>
-                                <p className="text-lg font-semibold text-primary">${apt.rent} / month</p>
-                                <div className="card-actions justify-end">
+                        <div key={apt._id} className="card bg-white shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl overflow-hidden group border border-gray-100">
+                            <figure className="relative h-64 overflow-hidden">
+                                <img
+                                    src={apt.apartmentImage || apt.image} // Fallback to 'image' if 'apartmentImage' invalid, or placeholder via onError
+                                    alt={`Apartment ${apt.apartmentNo}`}
+                                    className="h-full w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                    onError={(e) => { e.target.src = 'https://i.ibb.co/dbJ9r2t/apartment-placeholder.jpg'; }}
+                                />
+                                <div className="absolute top-4 right-4 bg-emerald-500 text-white px-4 py-1 rounded-full text-sm font-bold shadow-md">
+                                    ${apt.rent} <span className="text-xs font-normal">/ month</span>
+                                </div>
+                            </figure>
+                            <div className="card-body p-6">
+                                <h2 className="card-title text-2xl font-bold text-gray-800 mb-2">
+                                    {apt.blockName} <span className="text-emerald-500 text-sm">•</span> Room {apt.apartmentNo}
+                                </h2>
+                                <div className="flex items-center gap-4 text-gray-600 mb-6 text-sm">
+                                    <span className="bg-gray-100 px-3 py-1 rounded-full font-medium">Floor: {apt.floorNo}</span>
+                                </div>
+
+                                <div className="card-actions">
                                     <button
                                         onClick={() => handleAgreementClick(apt)}
-                                        className="btn btn-primary"
+                                        className={`btn w-full text-lg border-none shadow-md ${hasAgreement
+                                            ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                                            : 'bg-emerald-500 hover:bg-emerald-600 text-white'}`}
                                         disabled={hasAgreement}
                                     >
                                         {hasAgreement ? "Already Requested" : "Agreement"}
