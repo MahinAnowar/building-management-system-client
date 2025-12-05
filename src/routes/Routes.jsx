@@ -4,7 +4,7 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
 import Apartment from "../pages/Apartment/Apartment";
-import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from "../layouts/Dashboard";
 
 export const router = createBrowserRouter([
     {
@@ -31,7 +31,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "dashboard",
-        element: <DashboardLayout></DashboardLayout>,
+        element: <Dashboard></Dashboard>,
         children: [
             // Dashboard children routes will be added here
         ]
