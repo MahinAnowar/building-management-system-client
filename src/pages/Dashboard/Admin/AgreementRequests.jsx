@@ -1,17 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const AgreementRequests = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: agreements = [], refetch } = useQuery({
+    const { data: agreements = [], isLoading, refetch } = useQuery({
         queryKey: ['agreements'],
         queryFn: async () => {
             const res = await axiosSecure.get('/agreements?status=pending');
             return res.data;
         }
     });
+
+    if (isLoading) return <LoadingSpinner />;
 
     const handleAccept = (agreement) => {
         // Accept and Change Role to Member

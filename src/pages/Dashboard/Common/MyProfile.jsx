@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const MyProfile = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    const { data: agreements = [] } = useQuery({
+    const { data: agreements = [], isLoading } = useQuery({
         queryKey: ['agreement', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
@@ -14,6 +15,8 @@ const MyProfile = () => {
             return res.data;
         }
     });
+
+    if (isLoading) return <LoadingSpinner />;
 
     // Find the valid accepted agreement
     const agreement = agreements.find(a => a.status === 'checked');

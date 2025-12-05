@@ -1,16 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const Announcements = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: announcements = [] } = useQuery({
+    const { data: announcements = [], isLoading } = useQuery({
         queryKey: ['announcements'],
         queryFn: async () => {
             const res = await axiosSecure.get('/announcements');
             return res.data;
         }
     });
+
+    if (isLoading) return <LoadingSpinner />;
 
     return (
         <div>

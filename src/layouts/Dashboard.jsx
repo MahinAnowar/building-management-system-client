@@ -2,6 +2,7 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useRole from "../hooks/useRole";
 import { FaAd, FaBook, FaCalendar, FaHome, FaList, FaSearch, FaUser, FaUsers, FaUtensils, FaWallet } from 'react-icons/fa';
 import useAuth from "../hooks/useAuth";
+import LoadingSpinner from "../components/Shared/LoadingSpinner";
 
 const Dashboard = () => {
     const [role, roleLoading] = useRole();
@@ -16,8 +17,8 @@ const Dashboard = () => {
             .catch(error => console.error(error));
     }
 
-    // While loading role, we might show a spinner or nothing.
-    // For smoother UX, maybe show skeleton.
+    // While loading role, show spinner
+    if (roleLoading) return <LoadingSpinner />;
 
     return (
         <div className="drawer lg:drawer-open">

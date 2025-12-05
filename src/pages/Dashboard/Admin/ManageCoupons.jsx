@@ -2,17 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const ManageCoupons = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: coupons = [], refetch } = useQuery({
+    const { data: coupons = [], isLoading, refetch } = useQuery({
         queryKey: ['coupons'],
         queryFn: async () => {
             const res = await axiosSecure.get('/admin/coupons');
             return res.data;
         }
     });
+
+    if (isLoading) return <LoadingSpinner />;
 
     const [modalOpen, setModalOpen] = useState(false);
     const [code, setCode] = useState('');

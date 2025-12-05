@@ -2,17 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { FaTrashAlt } from "react-icons/fa";
 import Swal from 'sweetalert2';
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const ManageMembers = () => {
     const axiosSecure = useAxiosSecure();
 
-    const { data: members = [], refetch } = useQuery({
+    const { data: members = [], isLoading, refetch } = useQuery({
         queryKey: ['members'],
         queryFn: async () => {
             const res = await axiosSecure.get('/members');
             return res.data;
         }
     });
+
+    if (isLoading) return <LoadingSpinner />;
 
     const handleRemoveMember = (user) => {
         Swal.fire({

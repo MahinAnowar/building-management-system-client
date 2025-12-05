@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 
 const MakePayment = () => {
     const { user } = useAuth();
@@ -11,7 +12,7 @@ const MakePayment = () => {
     const navigate = useNavigate();
 
     // Fetch Agreement
-    const { data: agreements = [] } = useQuery({
+    const { data: agreements = [], isLoading } = useQuery({
         queryKey: ['agreement', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
@@ -19,6 +20,8 @@ const MakePayment = () => {
             return res.data;
         }
     });
+
+    if (isLoading) return <LoadingSpinner />;
 
     // Find the accepted agreement
     const agreement = agreements.find(a => a.status === 'checked');
