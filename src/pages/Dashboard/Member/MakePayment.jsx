@@ -11,7 +11,7 @@ const MakePayment = () => {
     const navigate = useNavigate();
 
     // Fetch Agreement
-    const { data: agreement } = useQuery({
+    const { data: agreements = [] } = useQuery({
         queryKey: ['agreement', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
@@ -20,12 +20,15 @@ const MakePayment = () => {
         }
     });
 
+    // Find the accepted agreement
+    const agreement = agreements.find(a => a.status === 'checked');
+
     const [month, setMonth] = useState('');
     const [couponCode, setCouponCode] = useState('');
     const [discount, setDiscount] = useState(0);
     const [couponApplied, setCouponApplied] = useState(false);
 
-    const rent = agreement?.rent || 0;
+    const rent = parseFloat(agreement?.rent || 0); // Ensure number
     const finalAmount = rent - discount;
 
     const handleApplyCoupon = async () => {
@@ -36,8 +39,8 @@ const MakePayment = () => {
         try {
             const res = await axiosSecure.post('/coupons/validate', { coupon: couponCode });
             if (res.data.valid) {
-                const discountPercentage = res.data.discount;
-                const discountAmount = (rent * discountPercentage) / 100;
+                const discountPercentage = parseFloat(res.data.discount); // Ensure number
+                const discountAmount = (parseFloat(rent) * discountPercentage) / 100;
                 setDiscount(discountAmount);
                 setCouponApplied(true);
                 Swal.fire("Success", `Coupon Applied! ${discountPercentage}% Off`, "success");

@@ -3,6 +3,7 @@ import { useState } from "react";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure"; // Added secure hook
 import useAuth from "../../hooks/useAuth";
+import useRole from "../../hooks/useRole";
 import { useNavigate } from "react-router-dom";
 import PageTitle from "../../components/Shared/PageTitle";
 
@@ -10,6 +11,7 @@ const Apartment = () => {
     const axiosPublic = useAxiosPublic();
     const axiosSecure = useAxiosSecure(); // Use secure for agreement
     const { user } = useAuth();
+    const [role] = useRole();
     const navigate = useNavigate();
 
     // Limit 6 per page
@@ -64,7 +66,10 @@ const Apartment = () => {
         }
     });
 
-    const hasAgreement = agreementData && agreementData.length > 0; // Check if array has items
+    // Disable if user is already a member OR has a pending request
+    const isMember = role === 'member';
+    const hasPendingQuery = agreementData?.some(a => a.status === 'pending');
+    const hasAgreement = isMember || hasPendingQuery;
 
     const handleSearch = () => {
         setCurrentPage(1);
@@ -183,32 +188,34 @@ const Apartment = () => {
             )}
 
             {/* Pagination */}
-            <div className="flex justify-center mt-12">
-                <div className="join">
-                    <button
-                        className="join-item btn"
-                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                        disabled={currentPage === 1}
-                    >
-                        «
-                    </button>
+            <div className="flex justify-center items-center mt-12 gap-2">
+                <button
+                    className="btn btn-circle btn-sm bg-white border-gray-200 hover:bg-emerald-50 text-gray-600 disabled:bg-gray-100 disabled:text-gray-300 shadow-sm"
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    «
+                </button>
+                <div className="flex gap-2">
                     {pages.map(page => (
                         <button
                             key={page}
-                            className={`join-item btn ${currentPage === page ? 'btn-active' : ''}`}
+                            className={`btn btn-sm w-10 h-10 rounded-full shadow-sm border-none ${currentPage === page
+                                ? 'bg-emerald-500 text-white hover:bg-emerald-600'
+                                : 'bg-white text-gray-700 hover:bg-emerald-50'}`}
                             onClick={() => setCurrentPage(page)}
                         >
                             {page}
                         </button>
                     ))}
-                    <button
-                        className="join-item btn"
-                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                        disabled={currentPage === totalPages}
-                    >
-                        »
-                    </button>
                 </div>
+                <button
+                    className="btn btn-circle btn-sm bg-white border-gray-200 hover:bg-emerald-50 text-gray-600 disabled:bg-gray-100 disabled:text-gray-300 shadow-sm"
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                >
+                    »
+                </button>
             </div>
 
             {/* Agreement Modal */}

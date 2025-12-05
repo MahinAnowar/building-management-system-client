@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useRole from "../hooks/useRole";
 import { FaAd, FaBook, FaCalendar, FaHome, FaList, FaSearch, FaUser, FaUsers, FaUtensils, FaWallet } from 'react-icons/fa';
 import useAuth from "../hooks/useAuth";
@@ -6,6 +6,15 @@ import useAuth from "../hooks/useAuth";
 const Dashboard = () => {
     const [role, roleLoading] = useRole();
     const { user, logOut } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logOut()
+            .then(() => {
+                navigate('/');
+            })
+            .catch(error => console.error(error));
+    }
 
     // While loading role, we might show a spinner or nothing.
     // For smoother UX, maybe show skeleton.
@@ -45,7 +54,7 @@ const Dashboard = () => {
                     <div className="divider"></div>
                     <li><NavLink to="/"><FaHome></FaHome> Home</NavLink></li>
                     <li><NavLink to="/apartment"><FaSearch></FaSearch> Apartments</NavLink></li>
-                    <li><button onClick={logOut}>Logout</button></li>
+                    <li><button onClick={handleLogout}>Logout</button></li>
                 </ul>
 
             </div>

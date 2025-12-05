@@ -9,7 +9,7 @@ const ManageCoupons = () => {
     const { data: coupons = [], refetch } = useQuery({
         queryKey: ['coupons'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/coupons');
+            const res = await axiosSecure.get('/admin/coupons');
             return res.data;
         }
     });
@@ -24,7 +24,8 @@ const ManageCoupons = () => {
         const couponData = {
             code,
             discount: parseFloat(discount),
-            description
+            description,
+            isAvailable: true
         };
 
         try {

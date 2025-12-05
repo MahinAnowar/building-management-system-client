@@ -6,7 +6,7 @@ const MyProfile = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
 
-    const { data: agreement } = useQuery({
+    const { data: agreements = [] } = useQuery({
         queryKey: ['agreement', user?.email],
         enabled: !!user?.email,
         queryFn: async () => {
@@ -15,7 +15,9 @@ const MyProfile = () => {
         }
     });
 
-    const isMember = agreement && agreement.status === 'checked'; // Simplified check, ideally rely on role or status
+    // Find the valid accepted agreement
+    const agreement = agreements.find(a => a.status === 'checked');
+    const isMember = !!agreement;
 
     return (
         <div>

@@ -16,6 +16,7 @@ console.log("Current Environment:", process.env.NODE_ENV);
 const corsOptions = {
     origin: [
         'http://localhost:5173',
+        'http://localhost:5174',
         'https://building-management-system-client.vercel.app'
         // Add other deployed URLs if any
     ],
@@ -211,17 +212,24 @@ async function run() {
         });
 
         app.get('/agreements', verifyToken, verifyAdmin, async (req, res) => {
-            const result = await agreementsCollection.find().toArray();
+            const status = req.query.status;
+            let query = {};
+            if (status) {
+                query.status = status;
+            }
+            const result = await agreementsCollection.find(query).toArray();
             res.send(result);
         });
 
         app.put('/agreement/status/:id', verifyToken, verifyAdmin, async (req, res) => {
             const id = req.params.id;
-            const { status } = req.body;
+            const { status, role } = req.body;
             const filter = { _id: new ObjectId(id) };
             const updateDoc = { $set: { status: status, checkedDate: new Date() } };
             const result = await agreementsCollection.updateOne(filter, updateDoc);
-            if (status === 'checked') {
+
+            // Only promote user and rent apartment if ACCEPTED (role attached is 'member')
+            if (status === 'checked' && role === 'member') {
                 const agreement = await agreementsCollection.findOne(filter);
                 if (agreement) {
                     await usersCollection.updateOne(
@@ -268,7 +276,7 @@ async function run() {
             const query = { code: coupon, isAvailable: true };
             const result = await couponsCollection.findOne(query);
             if (result) {
-                res.send({ valid: true, discount: result.discountPercentage, ...result });
+                res.send({ valid: true, discount: result.discount, ...result });
             } else {
                 res.send({ valid: false });
             }

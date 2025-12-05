@@ -88,28 +88,28 @@ const Register = () => {
                             <label className="label">
                                 <span className="label-text font-semibold">Name</span>
                             </label>
-                            <input type="text" {...register("name", { required: true })} placeholder="Full Name" className="input input-bordered w-full focus:outline-none focus:border-emerald-500" />
+                            <input type="text" {...register("name", { required: true })} placeholder="Full Name" className="input input-bordered w-full bg-white text-gray-900 border-gray-300 focus:outline-none focus:border-emerald-500" />
                             {errors.name && <span className="text-red-500 text-sm mt-1">Name is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-semibold">Photo URL</span>
                             </label>
-                            <input type="text" {...register("photoURL", { required: true })} placeholder="Photo URL" className="input input-bordered w-full focus:outline-none focus:border-emerald-500" />
+                            <input type="text" {...register("photoURL", { required: true })} placeholder="Photo URL" className="input input-bordered w-full bg-white text-gray-900 border-gray-300 focus:outline-none focus:border-emerald-500" />
                             {errors.photoURL && <span className="text-red-500 text-sm mt-1">Photo URL is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-semibold">Email</span>
                             </label>
-                            <input type="email" {...register("email", { required: true })} placeholder="email@example.com" className="input input-bordered w-full focus:outline-none focus:border-emerald-500" />
+                            <input type="email" {...register("email", { required: true })} placeholder="email@example.com" className="input input-bordered w-full bg-white text-gray-900 border-gray-300 focus:outline-none focus:border-emerald-500" />
                             {errors.email && <span className="text-red-500 text-sm mt-1">Email is required</span>}
                         </div>
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-semibold">Password</span>
                             </label>
-                            <input type="password" {...register("password", { required: true })} placeholder="******" className="input input-bordered w-full focus:outline-none focus:border-emerald-500" />
+                            <input type="password" {...register("password", { required: true })} placeholder="******" className="input input-bordered w-full bg-white text-gray-900 border-gray-300 focus:outline-none focus:border-emerald-500" />
                             {errors.password && <span className="text-red-500 text-sm mt-1">Password is required</span>}
                         </div>
 

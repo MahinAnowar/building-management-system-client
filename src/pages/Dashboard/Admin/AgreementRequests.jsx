@@ -54,7 +54,7 @@ const AgreementRequests = () => {
         <div>
             <h2 className="text-3xl font-bold mb-8">Agreement Requests</h2>
             <div className="overflow-x-auto">
-                <table className="table">
+                <table className="table table-zebra w-full">
                     <thead>
                         <tr>
                             <th>User Name</th>
