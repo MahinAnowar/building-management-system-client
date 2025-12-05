@@ -22,8 +22,8 @@ const Home = () => {
 
     const bannerImages = [
         "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?q=80&w=1000",
-        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000",
-        "https://images.unsplash.com/photo-1484154218962-a1c002085d2f?q=80&w=1000"
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=1000"
+
     ];
 
     return (
