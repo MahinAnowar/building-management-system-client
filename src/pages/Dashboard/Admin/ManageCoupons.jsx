@@ -7,6 +7,11 @@ import LoadingSpinner from "../../../components/Shared/LoadingSpinner";
 const ManageCoupons = () => {
     const axiosSecure = useAxiosSecure();
 
+    const [modalOpen, setModalOpen] = useState(false);
+    const [code, setCode] = useState('');
+    const [discount, setDiscount] = useState('');
+    const [description, setDescription] = useState('');
+
     const { data: coupons = [], isLoading, refetch } = useQuery({
         queryKey: ['coupons'],
         queryFn: async () => {
@@ -16,11 +21,6 @@ const ManageCoupons = () => {
     });
 
     if (isLoading) return <LoadingSpinner />;
-
-    const [modalOpen, setModalOpen] = useState(false);
-    const [code, setCode] = useState('');
-    const [discount, setDiscount] = useState('');
-    const [description, setDescription] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();

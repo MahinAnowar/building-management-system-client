@@ -21,15 +21,15 @@ const MakePayment = () => {
         }
     });
 
-    if (isLoading) return <LoadingSpinner />;
-
-    // Find the accepted agreement
-    const agreement = agreements.find(a => a.status === 'checked');
-
     const [month, setMonth] = useState('');
     const [couponCode, setCouponCode] = useState('');
     const [discount, setDiscount] = useState(0);
     const [couponApplied, setCouponApplied] = useState(false);
+
+    if (isLoading) return <LoadingSpinner />;
+
+    // Find the accepted agreement
+    const agreement = agreements.find(a => a.status === 'checked');
 
     const rent = parseFloat(agreement?.rent || 0); // Ensure number
     const finalAmount = rent - discount;
