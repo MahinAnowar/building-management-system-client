@@ -32,28 +32,26 @@ const MyProfile = () => {
                 </div>
             </div>
 
-            {/* Agreement Info (Only for Members) */}
-            {isMember && (
-                <div className="card bg-base-100 shadow-xl">
-                    <div className="card-body">
-                        <h3 className="card-title text-xl mb-4 text-primary">Apartment Information</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="p-4 border rounded-lg">
-                                <span className="font-bold">Floor No:</span> {agreement.floorNo}
-                            </div>
-                            <div className="p-4 border rounded-lg">
-                                <span className="font-bold">Block Name:</span> {agreement.blockName}
-                            </div>
-                            <div className="p-4 border rounded-lg">
-                                <span className="font-bold">Room No:</span> {agreement.apartmentNo}
-                            </div>
-                            <div className="p-4 border rounded-lg">
-                                <span className="font-bold">Agreement Date:</span> {new Date(agreement.date).toLocaleDateString()}
-                            </div>
+            {/* Agreement Info */}
+            <div className="card bg-base-100 shadow-xl">
+                <div className="card-body">
+                    <h3 className="card-title text-xl mb-4 text-primary">Apartment Information</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="p-4 border rounded-lg">
+                            <span className="font-bold">Floor No:</span> {isMember ? agreement.floorNo : 'None'}
+                        </div>
+                        <div className="p-4 border rounded-lg">
+                            <span className="font-bold">Block Name:</span> {isMember ? agreement.blockName : 'None'}
+                        </div>
+                        <div className="p-4 border rounded-lg">
+                            <span className="font-bold">Room No:</span> {isMember ? agreement.apartmentNo : 'None'}
+                        </div>
+                        <div className="p-4 border rounded-lg">
+                            <span className="font-bold">Agreement Date:</span> {isMember ? new Date(agreement.date).toLocaleDateString() : 'None'}
                         </div>
                     </div>
                 </div>
-            )}
+            </div>
         </div>
     );
 };

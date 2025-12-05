@@ -4,6 +4,7 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import useAxiosSecure from "../../hooks/useAxiosSecure"; // Added secure hook
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import PageTitle from "../../components/Shared/PageTitle";
 
 const Apartment = () => {
     const axiosPublic = useAxiosPublic();
@@ -113,6 +114,7 @@ const Apartment = () => {
 
     return (
         <div className="container mx-auto px-4 py-8">
+            <PageTitle title="Apartment" />
             <h2 className="text-3xl font-bold text-center mb-8">Available Apartments</h2>
 
             {/* Filter Section */}
@@ -227,7 +229,15 @@ const Apartment = () => {
                         <form method="dialog">
                             <button className="btn mr-2">Cancel</button>
                         </form>
-                        <button className="btn btn-success text-white" onClick={handleConfirmAgreement}>Confirm</button>
+                        <button
+                            className="btn btn-success text-white"
+                            onClick={(e) => {
+                                e.preventDefault(); // Prevent any form submission if inside one
+                                handleConfirmAgreement();
+                            }}
+                        >
+                            Confirm
+                        </button>
                     </div>
                 </div>
             </dialog>

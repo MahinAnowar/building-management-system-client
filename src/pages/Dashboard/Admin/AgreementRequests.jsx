@@ -19,7 +19,7 @@ const AgreementRequests = () => {
             status: 'checked',
             role: 'member'
         }
-        axiosSecure.put(`/agreements/${agreement._id}`, updateInfo)
+        axiosSecure.put(`/agreement/status/${agreement._id}`, updateInfo)
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();
@@ -37,7 +37,7 @@ const AgreementRequests = () => {
         const updateInfo = {
             status: 'checked'
         }
-        axiosSecure.put(`/agreements/${agreement._id}`, updateInfo)
+        axiosSecure.put(`/agreement/status/${agreement._id}`, updateInfo)
             .then(res => {
                 if (res.data.modifiedCount > 0) {
                     refetch();

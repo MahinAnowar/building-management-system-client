@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { Link } from "react-router-dom";
+import PageTitle from "../../components/Shared/PageTitle";
 
 // Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -28,6 +29,7 @@ const Home = () => {
 
     return (
         <div className="font-sans text-gray-800">
+            <PageTitle title="Home" />
             {/* Banner Section */}
             <section className="relative">
                 <Swiper

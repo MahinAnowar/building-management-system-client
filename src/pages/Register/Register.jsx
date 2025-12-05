@@ -4,6 +4,7 @@ import useAuth from "../../hooks/useAuth";
 import useAxiosPublic from "../../hooks/useAxiosPublic";
 import Swal from "sweetalert2";
 import { FaGoogle } from "react-icons/fa";
+import PageTitle from "../../components/Shared/PageTitle";
 
 const Register = () => {
     const { createUser, updateUserProfile, googleSignIn } = useAuth();
@@ -76,6 +77,7 @@ const Register = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 flex justify-center items-center p-4 font-sans text-gray-800">
+            <PageTitle title="Register" />
             <div className="card w-full max-w-md bg-white shadow-2xl rounded-2xl overflow-hidden border border-gray-100">
                 <div className="p-8">
                     <h2 className="text-3xl font-bold text-center text-emerald-600 mb-2">Create Account</h2>
